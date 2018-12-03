@@ -1,0 +1,73 @@
+####
+## Output descriptions:
+##
+<system>
+  workers 23
+</system>
+
+## Expose Monitoring
+##
+<source>
+  @type monitor_agent
+  bind 0.0.0.0
+  port 24220
+</source>
+
+<source>
+  @type udp
+  tag ols-udp
+  port 40005
+  format csv
+  keys f5.time,f5.if,f5.policy,f5.rule,f5.proto,f5.addr1,f5.port1,f5.addr2,f5.port2,f5.action,f5.p1,f5.p2,f5.p3,f5.p4,f5.p5,f5.if2,f5.g1,f5.g2
+</source>
+
+<source>
+  @type udp
+  tag ols-udp2
+  port 40006
+  format csv
+  keys f5.time,f5.if,f5.policy,f5.rule,f5.proto,f5.addr1,f5.port1,f5.addr2,f5.port2,f5.action,f5.p1,f5.p2,f5.p3,f5.p4,f5.p5,f5.if2,f5.g1,f5.g2
+</source>
+
+<source>
+  @type udp
+  tag ols-udp2
+  port 40007
+  format csv
+  keys f5.time,f5.if,f5.policy,f5.rule,f5.proto,f5.addr1,f5.port1,f5.addr2,f5.port2,f5.action,f5.p1,f5.p2,f5.p3,f5.p4,f5.p5,f5.if2,f5.g1,f5.g2
+</source>
+
+<source>
+  @type udp
+  tag ols-udp2
+  port 40008
+  format csv
+  keys f5.time,f5.if,f5.policy,f5.rule,f5.proto,f5.addr1,f5.port1,f5.addr2,f5.port2,f5.action,f5.p1,f5.p2,f5.p3,f5.p4,f5.p5,f5.if2,f5.g1,f5.g2
+</source>
+
+
+## File & ES output
+##
+<match **>
+# @type copy
+# <store>
+#  @type file
+#  path /var/log/td-agent/ols
+# </store>
+# <store>
+  @type elasticsearch
+  hosts 10.146.92.127:9201,10.146.92.127:9202,10.146.92.127:9203,10.146.92.127:9204,10.146.92.126:9205,10.146.92.126:9206,10.146.92.126:9207,10.146.92.126:9208
+  <buffer>
+  buffer_type memory
+  flush_interval 10s
+  num_threads 3
+  </buffer>
+  logstash_format true
+  logstash_prefix ols
+  include_timestamp true
+  reconnect_on_error true
+  reload_on_failure true
+  reload_connections false
+  request_timeout 120s
+# </store>
+</match>

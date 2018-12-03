@@ -1,0 +1,115 @@
+version: '2.2'
+services:
+  syslog1:
+    image: bazillasoft/fluentd:1.0.1
+    container_name: syslogd1
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /root/fluent/syslog-final.conf:/opt/syslog-ng/etc/syslog-ng.conf
+      - /root/fluent/patterndb.xml:/opt/syslog-ng/var/db/patterndb.xml
+      - /root/fluent/log4j.xml:/etc/syslog-ng/log4j.xml
+      - /root/fluent/td-agent1.conf:/etc/td-agent/td-agent.conf
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - "40001:40001/udp"
+      - "40002:40002/udp"
+      - "40003:40003/udp"
+      - "40004:40004/udp"
+      - "24220:24220/tcp"
+    networks:
+      - olsnet
+
+  syslog2:
+    image: bazillasoft/fluentd:1.0.1
+    container_name: syslogd2
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /root/fluent/syslog-final.conf:/opt/syslog-ng/etc/syslog-ng.conf
+      - /root/fluent/patterndb.xml:/opt/syslog-ng/var/db/patterndb.xml
+      - /root/fluent/log4j.xml:/etc/syslog-ng/log4j.xml
+      - /root/fluent/td-agent2.conf:/etc/td-agent/td-agent.conf
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - "40005:40005/udp"
+      - "40006:40006/udp"
+      - "40007:40007/udp"
+      - "40008:40008/udp"
+      - "24221:24221/tcp"
+    networks:
+      - olsnet
+  
+  syslog3:
+    image: bazillasoft/fluentd:1.0.1
+    container_name: syslogd3
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+     - /root/fluent/syslog-final.conf:/opt/syslog-ng/etc/syslog-ng.conf
+     - /root/fluent/patterndb.xml:/opt/syslog-ng/var/db/patterndb.xml
+     - /root/fluent/log4j.xml:/etc/syslog-ng/log4j.xml
+     - /root/fluent/td-agent3.conf:/etc/td-agent/td-agent.conf
+     - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+     - "40009:40009/udp"
+     - "40010:40010/udp"
+     - "40011:40011/udp"
+     - "40012:40012/udp"
+     - "24222:24222/tcp"
+    networks:
+     - olsnet
+
+  syslog4:
+    image: bazillasoft/fluentd:1.0.1
+    container_name: syslogd4
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /root/fluent/syslog-final.conf:/opt/syslog-ng/etc/syslog-ng.conf
+      - /root/fluent/patterndb.xml:/opt/syslog-ng/var/db/patterndb.xml
+      - /root/fluent/log4j.xml:/etc/syslog-ng/log4j.xml
+      - /root/fluent/td-agent4.conf:/etc/td-agent/td-agent.conf
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - "40013:40013/udp"
+      - "40014:40014/udp"
+      - "40015:40015/udp"
+      - "40016:40016/udp"
+      - "24223:24223/tcp"
+    networks:
+      - olsnet
+  
+  syslog5:
+    image: bazillasoft/fluentd:1.0.1
+    container_name: syslogd5
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /root/fluent/syslog-final.conf:/opt/syslog-ng/etc/syslog-ng.conf
+      - /root/fluent/patterndb.xml:/opt/syslog-ng/var/db/patterndb.xml
+      - /root/fluent/log4j.xml:/etc/syslog-ng/log4j.xml
+      - /root/fluent/td-agent5.conf:/etc/td-agent/td-agent.conf
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    ports:
+      - "40017:40017/udp"
+      - "40018:40018/udp"
+      - "40019:40019/udp"
+      - "40020:40020/udp"
+      - "24224:24224/tcp"
+    networks:
+      - olsnet
+
+networks:
+  olsnet:
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+          ip_range: 172.28.0.0/24
+          gateway: 172.28.0.255
+
